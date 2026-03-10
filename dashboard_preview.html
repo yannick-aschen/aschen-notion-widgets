@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aschen Dashboard Preview</title>
+    <style>
+        :root {
+            --bg-color: #191919;
+            --text-color: #ffffff;
+            --accent-color: #3b82f6;
+            --secondary-text: #a1a1aa;
+            --card-bg: #262626;
+            --border-color: #374151;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        .dashboard {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, #1e3a8a 0%, #1e40af 100%);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: -0.05em;
+        }
+
+        .header p {
+            color: #bfdbfe;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--secondary-text);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--secondary-text);
+        }
+
+        .pipeline-item {
+            background: #333;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #444;
+            color: #ddd;
+        }
+
+        .partner-split {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .partner-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            background: #444;
+            text-align: center;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .partner-btn:hover {
+            background: #555;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #444;
+            height: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            width: 15%;
+            background: var(--accent-color);
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Good morning, Aschen</h1>
+            <p>Tuesday, 10 March 2026 | AEST</p>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-col" style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <!-- The Grind Tracker -->
+            <div class="section">
+                <div class="section-title">🚀 The Grind: Path to First $1k</div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                    <span>Current: $150 (Setup Fee)</span>
+                    <span>Goal: $1,000</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--secondary-text);">"Don't get stuck on the red tape—focus on the goal."</p>
+            </div>
+
+            <!-- Client Pipeline -->
+            <div class="section">
+                <div class="section-title">📂 Active Pipeline</div>
+                <div class="pipeline-item">
+                    <div style="display: flex; justify-content: space-between;">
+                        <strong>Brisbane Electrician Co.</strong>
+                        <span class="tag">Action Plan</span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--secondary-text); margin-top: 4px;">Next: Finalize GHL Snapshot</div>
+                </div>
+                <div class="pipeline-item" style="border-left-color: #10b981;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <strong>Local Beauty Salon</strong>
+                        <span class="tag">Discovery</span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--secondary-text); margin-top: 4px;">Next: Initial Chat (Yannick)</div>
+                </div>
+            </div>
+
+            <!-- Service Stack -->
+            <div class="section">
+                <div class="section-title">🛠️ Service Stack Quick-View</div>
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <div class="stat-label">Foundations</div>
+                        <div class="stat-value" style="font-size: 1.1rem;">$800+</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Growth Engine</div>
+                        <div class="stat-value" style="font-size: 1.1rem;">$1.5k+</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Scale System</div>
+                        <div class="stat-value" style="font-size: 1.1rem;">Bespoke</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Area -->
+        <div class="side-col" style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <!-- Partner Hub -->
+            <div class="section">
+                <div class="section-title">👥 Partner Hub</div>
+                <div style="margin-bottom: 15px;">
+                    <div style="font-size: 0.85rem; font-weight: 600;">Yannick</div>
+                    <div style="font-size: 0.75rem; color: var(--secondary-text);">Strategy & Sales</div>
+                    <div class="partner-split">
+                        <div class="partner-btn">New Lead</div>
+                        <div class="partner-btn">Pitch Deck</div>
+                    </div>
+                </div>
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 15px 0;">
+                <div>
+                    <div style="font-size: 0.85rem; font-weight: 600;">Darcy</div>
+                    <div style="font-size: 0.75rem; color: var(--secondary-text);">Technical & Ops</div>
+                    <div class="partner-split">
+                        <div class="partner-btn">GHL Setup</div>
+                        <div class="partner-btn">Zapier Log</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="section">
+                <div class="section-title">🔗 Resources</div>
+                <ul style="font-size: 0.85rem; padding-left: 20px; margin: 0; color: var(--accent-color);">
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">GHL White-Label Login</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">Tradie Snapshot V1</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: inherit; text-decoration: none;">AEST Time Sync</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
