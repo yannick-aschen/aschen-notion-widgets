@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aschen Welcome Widget</title>
+    <style>
+        :root {
+            --bg-color: #191919;
+            --text-color: #ffffff;
+            --accent-color: #3b82f6;
+            --secondary-text: #a1a1aa;
+            --card-bg: #262626;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .greeting {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .date-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--secondary-text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .info-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 480px) {
+            .greeting {
+                font-size: 1.75rem;
+            }
+            .info-value {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="greeting" class="greeting">Good morning, Aschen</div>
+        <div id="full-date" style="color: var(--secondary-text); font-size: 1.1rem; margin-bottom: 1.5rem;"></div>
+        
+        <div class="date-info">
+            <div class="info-card">
+                <div class="info-label">Week</div>
+                <div id="week-number" class="info-value">--</div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">Quarter</div>
+                <div id="quarter" class="info-value">--</div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">Days Left</div>
+                <div id="days-left" class="info-value highlight">--</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateWidget() {
+            // Use AEST (UTC+10)
+            const now = new Date();
+            const aestTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Sydney"}));
+            
+            const hours = aestTime.getHours();
+            let greetingText = "Good evening, Aschen";
+            if (hours < 12) greetingText = "Good morning, Aschen";
+            else if (hours < 18) greetingText = "Good afternoon, Aschen";
+            
+            document.getElementById('greeting').innerText = greetingText;
+
+            // Full Date Display
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('full-date').innerText = aestTime.toLocaleDateString('en-AU', options);
+
+            // Week of the Year
+            const startOfYear = new Date(aestTime.getFullYear(), 0, 1);
+            const pastDaysOfYear = (aestTime - startOfYear) / 86400000;
+            const weekNumber = Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
+            document.getElementById('week-number').innerText = weekNumber;
+
+            // Quarter
+            const quarter = Math.floor((aestTime.getMonth() + 3) / 3);
+            document.getElementById('quarter').innerText = `Q${quarter}`;
+
+            // Days Left in Year
+            const endOfYear = new Date(aestTime.getFullYear(), 11, 31);
+            const msPerDay = 24 * 60 * 60 * 1000;
+            const daysLeft = Math.ceil((endOfYear - aestTime) / msPerDay);
+            document.getElementById('days-left').innerText = daysLeft;
+        }
+
+        updateWidget();
+        // Update every minute to keep greeting and date fresh
+        setInterval(updateWidget, 60000);
+    </script>
+</body>
+</html>
