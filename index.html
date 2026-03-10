@@ -105,35 +105,65 @@
 
     <script>
         function updateWidget() {
-            // Use AEST (UTC+10)
-            const now = new Date();
-            const aestTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Sydney"}));
+            // Get current UTC time
+            const utcNow = new Date();
             
-            const hours = aestTime.getHours();
+            // Create a date formatter for AEST (Australia/Sydney)
+            const formatter = new Intl.DateTimeFormat('en-AU', {
+                timeZone: 'Australia/Sydney',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            
+            const parts = formatter.formatToParts(utcNow);
+            const partMap = {};
+            parts.forEach(part => {
+                partMap[part.type] = part.value;
+            });
+            
+            // Extract AEST time components
+            const aestYear = parseInt(partMap.year);
+            const aestMonth = parseInt(partMap.month) - 1; // 0-indexed
+            const aestDay = parseInt(partMap.day);
+            const aestHour = parseInt(partMap.hour);
+            
+            // Create a date object representing AEST time (for calculations)
+            const aestDate = new Date(aestYear, aestMonth, aestDay);
+            
+            // Determine greeting based on AEST hour
             let greetingText = "Good evening, Aschen";
-            if (hours < 12) greetingText = "Good morning, Aschen";
-            else if (hours < 18) greetingText = "Good afternoon, Aschen";
+            if (aestHour < 12) greetingText = "Good morning, Aschen";
+            else if (aestHour < 18) greetingText = "Good afternoon, Aschen";
             
             document.getElementById('greeting').innerText = greetingText;
 
-            // Full Date Display
+            // Full Date Display (AEST)
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('full-date').innerText = aestTime.toLocaleDateString('en-AU', options);
+            const dateFormatter = new Intl.DateTimeFormat('en-AU', {
+                ...options,
+                timeZone: 'Australia/Sydney'
+            });
+            document.getElementById('full-date').innerText = dateFormatter.format(utcNow);
 
-            // Week of the Year
-            const startOfYear = new Date(aestTime.getFullYear(), 0, 1);
-            const pastDaysOfYear = (aestTime - startOfYear) / 86400000;
+            // Week of the Year (ISO 8601)
+            const startOfYear = new Date(aestYear, 0, 1);
+            const pastDaysOfYear = (aestDate - startOfYear) / 86400000;
             const weekNumber = Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
             document.getElementById('week-number').innerText = weekNumber;
 
             // Quarter
-            const quarter = Math.floor((aestTime.getMonth() + 3) / 3);
+            const quarter = Math.floor((aestMonth + 3) / 3);
             document.getElementById('quarter').innerText = `Q${quarter}`;
 
-            // Days Left in Year
-            const endOfYear = new Date(aestTime.getFullYear(), 11, 31);
+            // Days Left in Year (AEST)
+            const endOfYear = new Date(aestYear, 11, 31);
             const msPerDay = 24 * 60 * 60 * 1000;
-            const daysLeft = Math.ceil((endOfYear - aestTime) / msPerDay);
+            const daysLeft = Math.ceil((endOfYear - aestDate) / msPerDay);
             document.getElementById('days-left').innerText = daysLeft;
         }
 
